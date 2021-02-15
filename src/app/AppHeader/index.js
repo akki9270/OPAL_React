@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom'
 import { Layout, Menu } from 'antd';
 import { ROUTES } from '../../common/constants';
 // import history from '../../history';
@@ -10,8 +11,8 @@ const { Header } = Layout;
 const AppHeader = (props) => {
   const onMenuSelect = e => {    
     const { history } = props;
-    // history.push(e.key);
-  };
+    history.push(e.key);
+  };  
   return (
     <Header>
       <div className="logo">
@@ -31,4 +32,4 @@ const AppHeader = (props) => {
     </Header>
   );
 };
-export default AppHeader;
+export default withRouter(AppHeader);

@@ -4,19 +4,17 @@ import AppHeader from './AppHeader';
 import ContentRoutes from './ContentRoutes';
 import './App.css';
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
-const App = (props) => {
+const App = () => {
   return (
     <Layout style={{ height: '100vh' }}>
-      <AppHeader {...props}/>
-      <Content style={{ padding: '10px 50px' }}>
-        <div>
-          <ContentRoutes />
-        </div>       
+      <AppHeader />
+      <Content style={{ padding: '25px 50px' }}>
+        <ContentRoutes />
       </Content>
     </Layout>
   );
 };
 
-export default App;
+export default (App)

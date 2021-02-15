@@ -1,3 +1,7 @@
+.dashboard-wrapper {
+  background-color: white;
+}
+
 .vertical-center{
   flex: 1; 
 }
