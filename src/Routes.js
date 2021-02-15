@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Route, Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import history from './history';
 import PrivateRoute from './PrivateRoute';
 import App from './app/App';
@@ -8,7 +8,7 @@ const Routes = () => {
   return (
     <Fragment>
       <Router history={history}>
-        <Switch>
+        <Switch>                    
           <PrivateRoute path="/" component={App} />
         </Switch>
       </Router>

@@ -2,25 +2,30 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { Layout, Menu } from 'antd';
 import { ROUTES } from '../../common/constants';
-// import history from '../../history';
 import logo from '../../assets/logo192.png'
 import '../App.css'
 
 const { Header } = Layout;
 
 const AppHeader = (props) => {
-  const onMenuSelect = e => {    
-    const { history } = props;
+  const { location: { pathname }, history } = props;
+  const onMenuSelect = e => {
     history.push(e.key);
-  };  
+  };
+  const onLogoImgClick = () => {
+    history.push(ROUTES.MAIN);
+  };
   return (
     <Header>
       <div className="logo">
-        <img src={logo} style={{ width: '40px' }} />
+        <img src={logo} className='logo-img'
+          onClick={onLogoImgClick} />
       </div>
-      <Menu 
-        theme="dark" 
+      <Menu
+        theme="dark"
         mode="horizontal"
+        selectedKeys={[`/${pathname.split('/')[1]}`]}
+        defaultSelectedKeys={[ROUTES.MAIN]}
         onSelect={onMenuSelect}
       >
         <Menu.Item key={ROUTES.PRODUCT}>Product</Menu.Item>
