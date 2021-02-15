@@ -8,13 +8,13 @@ const { Content, Footer } = Layout;
 
 const App = () => {
   return (
-    <Layout style={{ height: '100vh' }}>
+    <Layout className='layout-container'>
       <AppHeader />
-      <Content style={{ padding: '0 50px 0px 50px' }}>
+      <Content className='content-container'>
         <ContentRoutes />
       </Content>
       <Footer>
-        <div className="gx-layout-footer-content">OPAL © 2021</div>
+        <div>OPAL © 2021</div>
       </Footer>
     </Layout>
   );

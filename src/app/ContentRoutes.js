@@ -4,7 +4,6 @@ import Error404 from '../Error404';
 import Dashboard from '../modules/Dashboard';
 import Product from 'src/modules/Product';
 
-
 const ContentRoutes = () => {
   return (
     <Switch>

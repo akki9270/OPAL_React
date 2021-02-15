@@ -33,6 +33,8 @@ const AppHeader = (props) => {
         <Menu.Item key={ROUTES.DOCS}>Docs</Menu.Item>
         <Menu.Item key={ROUTES.COMPANY}>Company</Menu.Item>
         <Menu.Item key={ROUTES.CONTACT}>Conatct</Menu.Item>
+        <Menu.Item key={ROUTES.SIGNUP} className='right-menu'>Signup</Menu.Item>
+        <Menu.Item key={ROUTES.LOGIN} className='right-menu' >Signin</Menu.Item>
       </Menu>
     </Header>
   );
