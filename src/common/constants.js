@@ -6,7 +6,8 @@ export const ROUTES = {
   COMPANY: '/company',
   CONTACT: '/contact',
   LOGIN: '/login',
-  SIGNUP: '/signup'
+  SIGNUP: '/signup',
+  LOGOUT: '/logout'
 };
 
 export const REGEX = {
