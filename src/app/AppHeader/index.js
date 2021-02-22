@@ -36,12 +36,13 @@ const AppHeader = (props) => {
         onSelect={onMenuSelect}
       >
         <Menu.Item key={ROUTES.PRODUCT}>Product</Menu.Item>
-        <Menu.Item key={ROUTES.CALCULATION}>Calculation</Menu.Item>
+        <Menu.Item key={ROUTES.CALCULATION}>Online Calculation</Menu.Item>
         <Menu.Item key={ROUTES.DOCS}>Docs</Menu.Item>
         <Menu.Item key={ROUTES.COMPANY}>Company</Menu.Item>
         <Menu.Item key={ROUTES.CONTACT}>Conatct</Menu.Item>
-        {!isAuthenticated() && <Menu.Item key={ROUTES.SIGNUP} className='right-menu'>Signup</Menu.Item>}
-        {!isAuthenticated() && <Menu.Item key={ROUTES.LOGIN} className='right-menu' >Signin</Menu.Item>}
+        {!isAuthenticated() && <Menu.Item key={ROUTES.SIGNUP} className='right-menu'>Register</Menu.Item>}
+        {!isAuthenticated() && <Menu.Item key={ROUTES.LOGIN} className='right-menu' >Login</Menu.Item>}
+        {isAuthenticated() && <Menu.Item key={ROUTES.ACCOUNT} className='right-menu' >Account</Menu.Item>}
         {isAuthenticated() && <Menu.Item key={ROUTES.LOGOUT} className='right-menu' >Logout</Menu.Item>}
       </Menu>
     </Header>
