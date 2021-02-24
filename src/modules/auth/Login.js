@@ -6,6 +6,7 @@ import { get } from 'lodash';
 import { ROUTES } from 'src/common/constants';
 import { apiInstance } from '../../helpers/api';
 import { showNotification } from '../../helpers';
+import ForgotPasswordModal from './ForgotPassword';
 // import { connect } from 'react-redux';
 // import { withRouter } from 'react-router';
 // import { loginRequest, loginPageInit } from './actions';
@@ -32,6 +33,7 @@ const { Title } = Typography;
 
 const Login = (props) => {
   const [loading, setLoading] = useState(false);
+  const [visibleForgotPasswordForm, setVisibleForgotPasswordForm] = useState(false);
   const { history } = props
   const onFinish = async (values) => {
     // console.log('Received values of form: ', values);
@@ -102,9 +104,9 @@ const Login = (props) => {
                   <Checkbox>Remember me</Checkbox>
                 </Form.Item>
 
-                <a className="login-form-forgot" href="">
+                <a className="login-form-forgot" onClick={() => setVisibleForgotPasswordForm(true)}>
                   Forgot password
-              </a>
+                </a>
               </Form.Item>
 
               <Form.Item>
@@ -121,6 +123,10 @@ const Login = (props) => {
           </Card>
         </Spin>
       </Col>
+      {visibleForgotPasswordForm && <ForgotPasswordModal
+        visibleForgotPasswordForm={visibleForgotPasswordForm}
+        setVisibleForgotPasswordForm={setVisibleForgotPasswordForm}
+      />}
     </Row>
   );
 };
