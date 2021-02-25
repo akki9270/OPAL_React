@@ -15,6 +15,8 @@ const AppHeader = (props) => {
       logout()
       showNotification('success', 'Logout Successfully')
       history.push(ROUTES.MAIN);
+    } else if(e.key === ROUTES.CALCULATION && !isAuthenticated()){
+      showNotification('error', 'You must first log in before using online calculation.');
     } else {
       history.push(e.key);
     }
@@ -39,11 +41,11 @@ const AppHeader = (props) => {
         <Menu.Item key={ROUTES.CALCULATION}>Online Calculation</Menu.Item>
         <Menu.Item key={ROUTES.DOCS}>Docs</Menu.Item>
         <Menu.Item key={ROUTES.COMPANY}>Company</Menu.Item>
-        <Menu.Item key={ROUTES.CONTACT}>Conatct</Menu.Item>
+        <Menu.Item key={ROUTES.CONTACT}>Contact</Menu.Item>
         {!isAuthenticated() && <Menu.Item key={ROUTES.SIGNUP} className='right-menu'>Register</Menu.Item>}
         {!isAuthenticated() && <Menu.Item key={ROUTES.LOGIN} className='right-menu' >Login</Menu.Item>}
-        {isAuthenticated() && <Menu.Item key={ROUTES.ACCOUNT} className='right-menu' >Account</Menu.Item>}
         {isAuthenticated() && <Menu.Item key={ROUTES.LOGOUT} className='right-menu' >Logout</Menu.Item>}
+        {isAuthenticated() && <Menu.Item key={ROUTES.PROFILE} className='right-menu' >Account</Menu.Item>}
       </Menu>
     </Header>
   );
