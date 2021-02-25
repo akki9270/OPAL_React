@@ -9,17 +9,17 @@ const Dashbaord = ({ history }) => {
   }
   const productContent = (
     <div>
-      Product Details
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
     </div>
   );
   const calculationContent = (
     <div>
-      Online calculation Details
+      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
     </div>
   );
   const docsContent = (
     <div>
-      Documents Details
+      It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.     
     </div>
   );
   return (
