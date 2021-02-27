@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, Radio, Spin } from 'antd';
+import { Modal, Form, Input, Spin } from 'antd';
 import { get } from 'lodash'
-import { apiInstance } from 'src/helpers/api';
+import { apiInstance } from '../../helpers/api';
+import { showNotification } from '../../helpers';
 
 const ForgotPasswordForm = ({ visible, onCreate, onCancel }) => {
   const [form] = Form.useForm();
@@ -9,7 +10,7 @@ const ForgotPasswordForm = ({ visible, onCreate, onCancel }) => {
     <Modal
       visible={visible}
       title="Forgot Password Form"
-      okText="Create"
+      okText="Update"
       cancelText="Cancel"
       onCancel={onCancel}
       onOk={() => {
@@ -88,17 +89,19 @@ const ForgotPasswordModal = (props) => {
   const { visibleForgotPasswordForm, setVisibleForgotPasswordForm } = props;
   const [loading, setLoading] = useState(false);
   const onSubmit = async (values) => {
-    // console.log('Received values of form: ', values);
     try {
       const { email, password } = values;
       setLoading(true);
       const res = await apiInstance('post', '/auth/forgot-password', { email, password });
-      // const data = get(res, 'data');
-      // console.log('Data: ', data);
+      const data = get(res, 'data');
+      showNotification('success', 'Password successfully updated!');
       setLoading(false);
     } catch (error) {
-      setLoading(false)
+      if (error && error.message) {
+        showNotification('error', error.message);
+      }
     } finally {
+      setLoading(false);
       setVisibleForgotPasswordForm(false);
     }
   };
