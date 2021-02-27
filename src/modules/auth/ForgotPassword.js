@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, Radio } from 'antd';
+import { Button, Modal, Form, Input, Radio, Spin } from 'antd';
+import { get } from 'lodash'
+import { apiInstance } from 'src/helpers/api';
 
 const ForgotPasswordForm = ({ visible, onCreate, onCancel }) => {
   const [form] = Form.useForm();
@@ -14,8 +16,8 @@ const ForgotPasswordForm = ({ visible, onCreate, onCancel }) => {
         form
           .validateFields()
           .then((values) => {
-            form.resetFields();
             onCreate(values);
+            form.resetFields();
           })
           .catch((info) => {
             console.log('Validate Failed:', info);
@@ -83,27 +85,35 @@ const ForgotPasswordForm = ({ visible, onCreate, onCancel }) => {
 };
 
 const ForgotPasswordModal = (props) => {
-  const { visibleForgotPasswordForm, setVisibleForgotPasswordForm } = props
-  const onSubmit = (values) => {
-    console.log('Received values of form: ', values);
-    // const { email, password } = values    
-    // setLoading(true)
-    // const res = await apiInstance('post', '/auth/signin', { email, password })
-    // setLoading(false)
-    // const data = get(res, 'data')
-    // console.log('Data: ', data)
-    setVisibleForgotPasswordForm(false);
+  const { visibleForgotPasswordForm, setVisibleForgotPasswordForm } = props;
+  const [loading, setLoading] = useState(false);
+  const onSubmit = async (values) => {
+    // console.log('Received values of form: ', values);
+    try {
+      const { email, password } = values;
+      setLoading(true);
+      const res = await apiInstance('post', '/auth/forgot-password', { email, password });
+      // const data = get(res, 'data');
+      // console.log('Data: ', data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false)
+    } finally {
+      setVisibleForgotPasswordForm(false);
+    }
   };
 
   return (
     <div>
-      <ForgotPasswordForm
-        visible={visibleForgotPasswordForm}
-        onCreate={onSubmit}
-        onCancel={() => {
-          setVisibleForgotPasswordForm(false);
-        }}
-      />
+      <Spin spinning={loading}>
+        <ForgotPasswordForm
+          visible={visibleForgotPasswordForm}
+          onCreate={onSubmit}
+          onCancel={() => {
+            setVisibleForgotPasswordForm(false);
+          }}
+        />
+      </Spin>
     </div>
   );
 };

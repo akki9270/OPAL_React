@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, DatePicker, Row, Col, Card, Typography, Spin } from 'antd';
+import { get } from 'lodash'
 import { apiInstance } from '../../helpers/api';
 import { showNotification } from '../../helpers';
+import { ROUTES } from 'src/common/constants';
 
 const { Title } = Typography;
 const layout = {
@@ -24,26 +26,32 @@ const Profile = (props) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('user'))
+    const userData = JSON.parse(localStorage.getItem('user'));
     if (userData) {
-      form.setFieldsValue({ ...userData })
+      form.setFieldsValue({ ...userData });
     }
   }, []);
 
 
-  const onFinish = async (values) => {
-    // console.log('Received values of form: ', values);
-    // props.onSubmitForm(values)
-    if (values) {
-      // const { email } = values
-      // setLoading(true)
-      // const res = await apiInstance('post', '/auth/signup', values)
-      // setLoading(false)
-      // const data = get(res, 'data')
-      // if (data) {
-      //   showNotification('success', 'Signup Successfully!');
-      //   history.push(ROUTES.MAIN);
-      // }
+  const onFinish = async (values) => {  
+    try {
+      const { history } = props;
+      if (values) {
+        setLoading(true);
+        const res = await apiInstance('post', '/update-user', values);
+        const data = get(res, 'data');
+        if (data) {
+          showNotification('success', 'Update Successfully!');
+          history.push(ROUTES.MAIN);
+        }
+        setLoading(false);
+      }
+      setLoading(false);
+    } catch (error) {
+      if (error && error.message) {
+        showNotification('error', error.message);
+      }
+      setLoading(false);
     }
   };
 
@@ -103,10 +111,10 @@ const Profile = (props) => {
               >
                 <Input />
               </Form.Item>
-              <Form.Item                              
+              <Form.Item
                 name="registration_date"
                 label="Registaration Date">
-                <DatePicker style={{ width: '100%' }}/>
+                <DatePicker style={{ width: '100%' }} />
               </Form.Item>
               <Form.Item
                 name="house_no"
@@ -143,7 +151,7 @@ const Profile = (props) => {
                 label="Website"
               >
                 <Input />
-              </Form.Item>             
+              </Form.Item>
               <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
                   Update

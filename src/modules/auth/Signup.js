@@ -49,18 +49,22 @@ const Signup = (props) => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
-    // console.log('Received values of form: ', values);
-    // props.onSubmitForm(values)
     if (values) {
-      const { email, password } = values
       // props.onSubmitForm({ email, password });
-      setLoading(true)
-      const res = await apiInstance('post', '/auth/signup', values)
-      setLoading(false)
-      const data = get(res, 'data')
-      if (data) {
-        showNotification('success', 'Signup Successfully!');
-        history.push(ROUTES.MAIN);
+      try {
+        setLoading(true)
+        const res = await apiInstance('post', '/auth/signup', values);
+        const data = get(res, 'data');
+        if (data) {
+          showNotification('success', 'Signup Successfully!');
+          history.push(ROUTES.MAIN);
+        }
+        setLoading(false);
+      } catch (error) {
+        if (error && error.message) {
+          showNotification('error', error.message);
+        }
+        setLoading(false);
       }
     }
   };
@@ -85,7 +89,7 @@ const Signup = (props) => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your first name!',                    
+                    message: 'Please input your first name!',
                   },
                 ]}
               >
@@ -97,7 +101,7 @@ const Signup = (props) => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your last name!',                    
+                    message: 'Please input your last name!',
                   },
                 ]}
               >

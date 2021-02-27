@@ -34,21 +34,28 @@ const { Title } = Typography;
 const Login = (props) => {
   const [loading, setLoading] = useState(false);
   const [visibleForgotPasswordForm, setVisibleForgotPasswordForm] = useState(false);
-  const { history } = props
+  const { history } = props;
   const onFinish = async (values) => {
     // console.log('Received values of form: ', values);
     if (values) {
-      const { email, password } = values
-      // props.onSubmitForm({ email, password });
-      setLoading(true)
-      const res = await apiInstance('post', '/auth/signin', { email, password })
-      setLoading(false)
-      const data = get(res, 'data')
-      if (data && data.user && data.token) {
-        localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('token', data.token);
-        showNotification('success', 'Login Successfully!');
-        history.push(ROUTES.MAIN);
+      try {
+        const { email, password } = values;
+        // props.onSubmitForm({ email, password });
+        setLoading(true);
+        const res = await apiInstance('post', '/auth/signin', { email, password });
+        const data = get(res, 'data');
+        if (data && data.user && data.token) {
+          localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem('token', data.token);
+          showNotification('success', 'Login Successfully!');
+          history.push(ROUTES.MAIN);
+        }
+        setLoading(false);
+      } catch (error) {
+        if (error && error.message) {
+          showNotification('error', error.message);
+        }
+        setLoading(false);
       }
     }
   };
