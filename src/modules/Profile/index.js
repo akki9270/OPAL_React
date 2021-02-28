@@ -38,6 +38,7 @@ const Profile = (props) => {
     try {
       const { history } = props;
       if (values) {
+        const cloneValues = cloneDeep(values);
         setLoading(true);
         const res = await apiInstance('post', '/update-user', cloneValues);
         const data = get(res, 'data');
