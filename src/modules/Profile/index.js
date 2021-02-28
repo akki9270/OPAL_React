@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, DatePicker, Row, Col, Card, Typography, Spin } from 'antd';
-import { get } from 'lodash'
+import { cloneDeep, get } from 'lodash'
 import { apiInstance } from '../../helpers/api';
 import { showNotification } from '../../helpers';
 import { ROUTES } from 'src/common/constants';
@@ -33,14 +33,17 @@ const Profile = (props) => {
   }, []);
 
 
-  const onFinish = async (values) => {  
+
+  const onFinish = async (values) => {
     try {
       const { history } = props;
       if (values) {
         setLoading(true);
-        const res = await apiInstance('post', '/update-user', values);
+        const res = await apiInstance('post', '/update-user', cloneValues);
         const data = get(res, 'data');
-        if (data) {
+        if (data && data.user) {
+          localStorage.setItem('user', JSON.stringify(data.user));
+          form.setFieldsValue({ ...data.user });
           showNotification('success', 'Update Successfully!');
           history.push(ROUTES.MAIN);
         }
@@ -111,13 +114,13 @@ const Profile = (props) => {
               >
                 <Input />
               </Form.Item>
-              <Form.Item
+              {/* <Form.Item
                 name="registration_date"
                 label="Registaration Date">
                 <DatePicker style={{ width: '100%' }} />
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item
-                name="house_no"
+                name="house_number"
                 label="House #"
               >
                 <Input type="number" />
